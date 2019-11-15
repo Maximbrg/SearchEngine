@@ -7,5 +7,6 @@ public class Article {
     public Article(String DANCO, String info) {
         this.DANCO = DANCO;
         this.info = info;
+        System.out.println("GITCHECK");
 }
     }
