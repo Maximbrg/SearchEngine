@@ -32,8 +32,8 @@ public class ReadFile {
                             if (str.equals("</DOC>")) { // new Article
                                 String DOCNO = buffer.substring(buffer.indexOf("<DOCNO>"), buffer.lastIndexOf("</DOCNO>")); // Unique key of the Article
                                 DOCNO = DOCNO.replace("<DOCNO>", "");  //clear tag
-                                Article aa = new Article(DOCNO, buffer); // load the rest of the article
-                                Article_dictionary.put(DOCNO, aa); // add to dictionary
+                                Article article = new Article(DOCNO, buffer);// create new article
+                                Article_dictionary.put(DOCNO, article); // add to dictionary
                                 buffer = "";
                             }
                         }
