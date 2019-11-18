@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -33,6 +34,9 @@ public class ReadFile {
                                 String DOCNO = buffer.substring(buffer.indexOf("<DOCNO>"), buffer.lastIndexOf("</DOCNO>")); // Unique key of the Article
                                 DOCNO = DOCNO.replace("<DOCNO>", "");  //clear tag
                                 Article article = new Article(DOCNO, buffer);// create new article
+                                String text = article.getText();
+                                Parse parse = new Parse(text);
+                                ArrayList<String> aa = parse.parseDoc();
                                 Article_dictionary.put(DOCNO, article); // add to dictionary
                                 buffer = "";
                             }
