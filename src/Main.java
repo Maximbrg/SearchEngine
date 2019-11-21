@@ -1,12 +1,8 @@
-import ReadFile.ReadFile;
+import Parser.*;
 
 public class Main {
     public static  void main(String[]args){
-        System.out.println("hello");
-        ReadFile abs = new ReadFile();
-        abs.readFile();
-        System.out.println("hello");
-        System.out.println("hello");
-
+       Parse par  = new Parse("");
+       par.parseDoc();
     }
 }
