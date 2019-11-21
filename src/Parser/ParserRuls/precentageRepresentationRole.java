@@ -2,7 +2,7 @@ package Parser.ParserRuls;
 
 import java.util.ArrayList;
 
-public class precentageRepresentationRole extends ANumberRules {
+public class PrecentageRepresentationRole extends ANumberRules {
 
     public int[] roleChecker(ArrayList<String> words, ArrayList<String> d_wordsCount){
         String str = words.get(0);

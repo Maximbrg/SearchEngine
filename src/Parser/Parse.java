@@ -1,6 +1,6 @@
 package Parser;
 import Parser.ParserRuls.MonthYearRule;
-import ReadFile.Stemmer;
+import Stemmer.Stemmer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -144,15 +144,11 @@ public class Parse {
             }
             index++;
         }
-
-
 /*
         doc.d_wordsCount = this.d_wordsCount;
         this.d_wordsCount = new Dictionary<string, int>();
 */
-
         return d_wordsCount;
-
     }
     /// delete the delimitors from the start and the end of the string in the list
     private void deleteDelimitors()
@@ -179,7 +175,6 @@ public class Parse {
         }
     }
 
-
     // This function checks if the next word we are parsing is a stopword, if it is there's no point going over it.
     // <returns>true whether the next word is a stopword, false otherwise</returns>
     private boolean checkStopWord()
@@ -192,54 +187,16 @@ public class Parse {
         }
         return false;
     }
+///  round to 2 digits after the dot
 
-    // check if the string is a valid representation of number
-
-    // Checks if its precent function and add it to d_wordsCount if it's fit and promote the index
-
-
-
-    /// This checks if a word given to us qualifies as a single word without any special format, e.g. : "study".
-
-    private boolean checkSingleWord()
+    public static double roundTheDigits(double toRound)
     {
-        String word = l_singleWords.get(index);
-        for (int i=0; i<word.length(); i++) {
-            if (word.charAt(i) < 'a' || word.charAt(i) > 'z' || word.charAt(i) >= 'A' && word.charAt(i) <= 'Z')
-                return false;
-        }
-        word = stemmer.stem();
-        if(word.charAt(0) <= 'a' || word.charAt(0) >= 'z' ) {
-
-            String tempWord = word.toUpperCase();
-            if (d_wordsCount.contains(tempWord)) {
-                d_wordsCount.remove(tempWord);
-                d_wordsCount.add(word);
-
-            } else {
-                tempWord.toUpperCase();
-                d_wordsCount.add(tempWord);
-            }
-            index++;
-            return true;
-        }
-        if(word.charAt(0) >= 'A' && word.charAt(0) <= 'Z' ) {
-            String tempWord = word.toLowerCase();
-            if (d_wordsCount.contains(tempWord)) {
-                index++;
-                return true;
-            } else {
-                word.toUpperCase();
-                d_wordsCount.add(word);
-                index++;
-                return true;
-            }
-        }
-        return false;
-
-
+        int help;
+        help = (int)(toRound * 100);
+        toRound = (double)help / 100;
+        return toRound;
     }
-
+    ///save the regular numbers in the dictionary as they sould
 
 
 }
