@@ -1,5 +1,5 @@
 package Parser;
-import Parser.ParserRuls.MonthYearRule;
+import Parser.ParserRuls.*;
 import Stemmer.Stemmer;
 
 import java.util.ArrayList;
@@ -26,8 +26,6 @@ public class Parse {
 
     public ArrayList<String> l_singleWords;
     private int index;
-
-
 
 
     //The class's constructor
@@ -65,26 +63,18 @@ public class Parse {
             d_months= new ArrayList<String >( Arrays.asList("january","february","march","april","may","june","july","august",
                     "september","october","november","december","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"));
 
-
-
-
-
-
         }
-
-
     }
-
-
     // Parse the document according to the set of rules given to us in the assignment
     //public void parseDoc(Document doc)
     public ArrayList<String> parseDoc()
     {
-        /*
+/*
         //deleteDelimitors
         this.l_singleWords.add("hello,");
         this.l_singleWords.add("shachar!");
         this.l_singleWords.add("/10");
+       */
         //checkRange
         this.l_singleWords.add("word-");
         this.l_singleWords.add("word");
@@ -94,15 +84,12 @@ public class Parse {
         this.l_singleWords.add("10");
         this.l_singleWords.add("and");
         this.l_singleWords.add("20");
-*/
 
         //checks MM-DD.
-     //   this.l_singleWords.add("14");
-        //this.l_singleWords.add("May");
+       this.l_singleWords.add("14");
+       this.l_singleWords.add("May");
         this.l_singleWords.add("June");
         this.l_singleWords.add("4");
-
-
         //checks YYYY-MM.
         this.l_singleWords.add("May");
         this.l_singleWords.add("1994");
@@ -119,30 +106,78 @@ public class Parse {
         ArrayList<String> words = new ArrayList<>();
         results[0] = 0;
         results[1] = 0;
-        MonthYearRule rDM = new MonthYearRule();
+        MonthYearRule rMY = new MonthYearRule();
+        DayMonthRule rDM = new DayMonthRule();
+        SingleWordRule rSW = new SingleWordRule(); // DOSEN'T WORK (STEMMING ???)
+        RangeRule rRR = new RangeRule();
+        NumberRepresentationRule rNFE = new NumberRepresentationRule();
+
+
+        PrecentageRepresentationRole rPR = new PrecentageRepresentationRole();
+
         deleteDelimitors();//The function removes all punctuation marks from all words in the repository before we start working with them.
-
-
-        while (index < l_singleWords.size())
-        {
-
-            if (l_singleWords.get(index).equals(""))
-            {
+        while (index < l_singleWords.size()) {
+            if (l_singleWords.get(index).equals("")) {
                 index++;
                 continue;
             }
-            if(index+1 < l_singleWords.size()) {
-            words.add(l_singleWords.get(index));
-            words.add(l_singleWords.get(index+1));
+            if (index + 1 < l_singleWords.size()) {
+                words.add(l_singleWords.get(index));
+                words.add(l_singleWords.get(index + 1));
+                results = rMY.roleChecker(words, d_wordsCount);
+                if (results[0] == 1) {
+                    index += results[1];
+                    words.clear();
+                    continue;
+                }
                 results = rDM.roleChecker(words, d_wordsCount);
                 if (results[0] == 1) {
                     index += results[1];
                     words.clear();
                     continue;
                 }
+                results = rPR.roleChecker(words, d_wordsCount);
+                if (results[0] == 1) {
+                    index += results[1];
+                    words.clear();
+                    continue;
+                }
+                results = rNFE.roleChecker(words, d_wordsCount);
+                if (results[0] == 1) {
+                    index += results[1];
+                    words.clear();
+                    continue;
+                }
+
+            }  // Checks DayMonth,MonthYear and precent Rule
+            /*
+            words.clear();
+            words.add(l_singleWords.get(index));
+            results = rSW.roleChecker(words,d_wordsCount);
+            if (results[0] == 1) {
+                index += results[1];
                 words.clear();
+                continue;
             }
+            */
+            if (index + 4 < l_singleWords.size()) {
+                words.clear();
+                words.add(l_singleWords.get(index));
+                words.add(l_singleWords.get(index + 1));
+                words.add(l_singleWords.get(index + 2));
+                words.add(l_singleWords.get(index + 3));
+                results = rRR.roleChecker(words, d_wordsCount);
+                if (results[0] == 1) {
+                    index += results[1];
+                    words.clear();
+                    continue;
+                }
+
+            } // Checks Range Rule
+
+          //  d_wordsCount.add(l_singleWords.get(index));
             index++;
+
         }
 /*
         doc.d_wordsCount = this.d_wordsCount;
@@ -196,9 +231,8 @@ public class Parse {
         toRound = (double)help / 100;
         return toRound;
     }
+
     ///save the regular numbers in the dictionary as they sould
-
-
 }
 
 

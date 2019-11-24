@@ -3,6 +3,7 @@ package Parser.ParserRuls;
 import java.util.ArrayList;
 
 public class NumberRepresentationRule extends ANumberRules{
+
     public int[] roleChecker(ArrayList<String> words, ArrayList<String> d_wordsCount){
     String word = words.get(0);
         if (!isNumber(word))
