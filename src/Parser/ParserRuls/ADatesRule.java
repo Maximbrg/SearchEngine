@@ -3,7 +3,7 @@ package Parser.ParserRuls;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract  class ADatesRule implements IRuleChecker {
+public abstract  class ADatesRule extends ARuleChecker {
 
 
     protected static ArrayList<String> d_months;

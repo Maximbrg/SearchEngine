@@ -4,9 +4,11 @@ import java.util.ArrayList;
 /// This class will be encharge of checking whether the word we're currently inspecting is a range indicator ('3-4' for example)
 public class RangeRule extends ANumberRules {
 
-    public int[] roleChecker(ArrayList<String> words, ArrayList<String> d_wordsCount)
+    public int[] roleChecker(ArrayList<String> words, String key)
     {
         //We will now examine the word
+        results[0]=0;
+        results[1]=0;
         String word = words.get(0).toLowerCase();
         String result = "";
         //If the word is between, just like in the stopwords check, and there is a format of a range following it, we need to add it here.
@@ -41,14 +43,8 @@ public class RangeRule extends ANumberRules {
         */
         if (results[1] == 0)
             return results;
-        addToDictionary(result,d_wordsCount);
+        addToDictionary(result,key);
         return results;
     }
 
-    private void addToDictionary(String toAdd,ArrayList<String> d_wordsCount)
-    {
-        if ((d_wordsCount.contains(toAdd))==false){
-            d_wordsCount.add(toAdd);
-        }
-    }
 }

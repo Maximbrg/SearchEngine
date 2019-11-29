@@ -1,14 +1,15 @@
 package ReadFile;
 
 public class Article {
-
+    private  static int i=0;
     String DANCO;
     String info;
 
     public Article(String DANCO, String info) {
         this.DANCO = DANCO;
         this.info = info;
-        System.out.println("GITCHECK");
+        System.out.println(i+"---------------"+DANCO);
+        i++;
 }
 
 

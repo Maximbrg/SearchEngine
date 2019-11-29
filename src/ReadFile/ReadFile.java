@@ -39,7 +39,7 @@ public class ReadFile {
                                 Article article = new Article(DOCNO, buffer);// create new article
                                 String text = article.getText();
                                 Parse parse = new Parse(text);
-                                ArrayList<String> aa = parse.parseDoc();
+                                parse.parseDoc(DOCNO);
                                 Article_dictionary.put(DOCNO, article); // add to dictionary
                                 buffer = "";
                             }

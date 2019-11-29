@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class NumberRepresentationRule extends ANumberRules{
 
-    public int[] roleChecker(ArrayList<String> words, ArrayList<String> d_wordsCount){
+    public int[] roleChecker(ArrayList<String> words, String key){
+        results[0]=0;
+        results[1]=0;
     String word = words.get(0);
         if (!isNumber(word))
             return results;
@@ -18,33 +20,35 @@ public class NumberRepresentationRule extends ANumberRules{
             }
 
         }
-        number=Double.parseDouble(tempWord);
+            number = Double.parseDouble(tempWord);
     }
-        else{
-        number=Double.parseDouble(word);
+        else {
+            if(!word.contains(".")||(word.length() - word.replace(".", "").length()) / ".".length()>=2)
+                return results;
+                number = Double.parseDouble(word);
     }
 
       //  if (index < l_singleWords.size() - 1)
     nextWord = words.get(1);
 
     //check if the next word incrice our number
-        if (nextWord == "Thousand" || nextWord == "thousand")
+        if (nextWord.equals("thousand") || nextWord.equals("Thousand"))
     {
         number = number * 1000;
         results[0]=1;
-        results[1]+=1;
+        results[1]=1;
     }
-        else if (nextWord == "Million" || nextWord == "million")
+        else if (nextWord.equals("Million") || nextWord.equals("million"))
     {
         number = number * 1000000;
         results[0]=1;
-        results[1]+=1;
+        results[1]=1;
     }
-        else if (nextWord == "Billion" || nextWord == "billion")
+        else if (nextWord.equals("Billion") || nextWord.equals("billion"))
     {
         number = number * 1000000000;
         results[0]=1;
-        results[1]+=1;
+        results[1]=1;
     }
 
     //check how many digits left to the poiont we have and update the nMultiper according to it
@@ -57,39 +61,40 @@ public class NumberRepresentationRule extends ANumberRules{
     {
         number = roundTheDigits(number);
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number),d_wordsCount);
+        addToDictionary(String.valueOf(number),key);
         results[0]=1;
-        results[1]+=1;
+        results[1]++;
         return results;
     }
         if (numOfOcc >3 &&numOfOcc <=6)
     {
         number = number / 1000;
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number) + 'K',d_wordsCount);
+        addToDictionary(String.valueOf(number) + 'K',key);
         results[0]=1;
-        results[1]+=1;
+        results[1]++;
         return results;
     }
         else if (numOfOcc >6 &&numOfOcc <=9)
     {
         number = number / 1000000;
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number) + 'M',d_wordsCount);
+        addToDictionary(String.valueOf(number) + 'M',key);
         results[0]=1;
-        results[1]+=1;
+        results[1]++;
         return results;
     }
         else if (numOfOcc >= 10)
     {
         number = number / 1000000000;
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number) + 'B',d_wordsCount);
+        addToDictionary(String.valueOf(number) + 'B',key);
         results[0]=1;
-        results[1]+=1;
+        results[1]++;
         return results;
     }
         results[0]=1;
+        results[1]++;
         return results;
 }
     private double roundTheDigits(double toRound)
@@ -99,10 +104,5 @@ public class NumberRepresentationRule extends ANumberRules{
         toRound = (double)help / 100;
         return toRound;
     }
-    private void addToDictionary(String toAdd,ArrayList<String> d_wordsCount)
-    {
-        if ((d_wordsCount.contains(toAdd))==false){
-            d_wordsCount.add(toAdd);
-        }
-    }
+
 }
