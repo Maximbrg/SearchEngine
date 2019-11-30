@@ -1,5 +1,7 @@
 package ReadFile;
 
+import jdk.nashorn.internal.runtime.ECMAException;
+
 public class Article {
     private  static int i=0;
     String DANCO;
@@ -14,8 +16,13 @@ public class Article {
 
 
     public String getText(){
-        String text = info.substring(info.indexOf("<TEXT>"), info.lastIndexOf("</TEXT>"));
-        text = text.replace("<TEXT>", "");
-        return text;
+        try {
+            String text = info.substring(info.indexOf("<TEXT>"), info.lastIndexOf("</TEXT>")); // 11838
+            text = text.replace("<TEXT>", "");
+            return text;
+        }
+        catch (Exception e ){
+            return "";
+        }
     }
 }

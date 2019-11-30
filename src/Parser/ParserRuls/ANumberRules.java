@@ -22,11 +22,11 @@ public abstract class ANumberRules extends ARuleChecker {
     //This boolean func check if str is number
     protected boolean isNumber(String sNumber){
     int counter =0;
-        if (sNumber.charAt(0) != '-' && (sNumber.charAt(0) < '0' || sNumber.charAt(0) > '9'))
+        if ((sNumber.charAt(0) != '-' && (sNumber.charAt(0) < '0' || sNumber.charAt(0) > '9')))
             return false;
         for (int i = 1; i < sNumber.length(); i++)
         {
-            if(sNumber.charAt(i) != '.') {
+            if(sNumber.charAt(i) == '.') {
                 counter++;
                 if (counter >= 2)
                     return false;

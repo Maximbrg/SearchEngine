@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 public class PriceRepresentationRule extends ANumberRules {
 
-    public int[] roleChecker(ArrayList<String> words, String key) {
+    public int[] roleChecker(ArrayList<String> words, String key,int index) {
             results[0] = 1;
             results[1] = 1;
-            int index=0;
         boolean hasComma = false;
         boolean flag=false;
         double price = 0;

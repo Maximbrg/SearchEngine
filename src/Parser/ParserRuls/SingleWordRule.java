@@ -4,10 +4,10 @@ package Parser.ParserRuls;
 import java.util.ArrayList;
 /// This checks if a word given to us qualifies as a single word without any special format, e.g. : "study".
 public class SingleWordRule extends AWordsRule{
-    public int[] roleChecker(ArrayList<String> words, String key){
+    public int[] roleChecker(ArrayList<String> words, String key,int index){
         results[0] = 0;
         results[1] = 0;
-        String word = words.get(0);
+        String word = words.get(index);
         for (int i=0; i<word.length(); i++) {
            // if (word.charAt(i) < 'a' || word.charAt(i) > 'z' || word.charAt(i) >= 'A' && word.charAt(i) <= 'Z') // ???
             if (!((word.charAt(i) >= 'a' && word.charAt(i) <= 'z') ||( word.charAt(i) >= 'A' && word.charAt(i) <= 'Z')))
@@ -16,7 +16,7 @@ public class SingleWordRule extends AWordsRule{
         results[0] = 1;
         results[1] = 1;
         word = stem(word);
-        addToDictionary(word,key);
+        addToDictionaryWord(word,key);
         /*
         if(word.charAt(0) >= 'a' && word.charAt(0) <= 'z' ) {
 

@@ -57,9 +57,8 @@ public class Parse {
     {
         index = 0;
         int [] results = new int[2];
-        ArrayList<String> words = new ArrayList<>();
-        boolean ifFound = false;
-        String [] rulesToCheack = {"MothYearRule","DayMonthRule","PriceRepresentationRule","PrecentageRepresentationRole","RangeRule","NumberRepresentationRule","SingleWordRule"};
+        boolean ifFound ;
+        String [] rulesToCheack = {"DayMonthRule","MothYearRule",/*"PriceRepresentationRule",*/"PrecentageRepresentationRole","RangeRule","NumberRepresentationRule","SingleWordRule"};
         deleteDelimitors();//The function removes all punctuation marks from all words in the repository before we start working with them.
         while (index < l_singleWords.size()) {
          if(checkStopWord())
@@ -72,13 +71,8 @@ public class Parse {
             results[0] = 0;
             results[1] = 0;
             for(int i=0;i<rulesToCheack.length;i++){
-                words.clear();
                 IRuleChecker Rulechecker = RulesFactory.getRuleChecker(rulesToCheack[i]);
-                for(int j=0;j<4;j++){
-                    if (index + j < l_singleWords.size())
-                        words.add(l_singleWords.get(index + j));
-                }
-                results = Rulechecker.roleChecker(words,articleKey);
+                results = Rulechecker.roleChecker(l_singleWords,articleKey,index);
                 if (results[0] == 1) {
                     index += results[1];
                     ifFound=true;
@@ -100,7 +94,7 @@ public class Parse {
     {
         for (int i = 0; i < l_singleWords.size(); i++){
             String word= l_singleWords.remove(i);
-            if(word.endsWith(",")||word.endsWith(".")||word.endsWith(")")||word.endsWith("("))
+            if(word.endsWith(",")||word.endsWith(".")||word.endsWith(")")||word.endsWith("(")||word.endsWith(";")||word.endsWith(":")||word.endsWith("]"))
             {
                 word = word.substring(0,word.length() - 1);
             }

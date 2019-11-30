@@ -21,13 +21,13 @@ public class ReadFile {
         File folder = new File("C:\\Users\\pc\\Desktop\\corpus"); // ****  NEED TO CHANGE IT TO LOCAL ADDRESS ****
         File[] listOfFiles = folder.listFiles();
         for (File file : listOfFiles) { // Entering to main folder
+            if(file.getName().equals("stopWords.txt"))
+            continue;
             File subfolder = new File("C:\\Users\\pc\\Desktop\\corpus\\" + file.getName());//+
             File[] listOfsubFiles = subfolder.listFiles();
             for (File subfile : listOfsubFiles) {
                 if (subfile.isFile()) {
                     try {
-
-
                         BufferedReader in = new BufferedReader(new FileReader(subfile.toString()));
                         String str;
                         String buffer = "";
@@ -42,6 +42,7 @@ public class ReadFile {
                                 parse.parseDoc(DOCNO);
                                 Article_dictionary.put(DOCNO, article); // add to dictionary
                                 buffer = "";
+                                Article_dictionary.remove(DOCNO);
                             }
                         }
                         in.close();

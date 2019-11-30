@@ -4,10 +4,25 @@ import java.util.ArrayList;
 
 public class NumberRepresentationRule extends ANumberRules{
 
-    public int[] roleChecker(ArrayList<String> words, String key){
+    public int[] roleChecker(ArrayList<String> words, String key,int index){
+        /*
         results[0]=0;
         results[1]=0;
-    String word = words.get(0);
+        String word = words.get(0);
+        if (!isNumber(word))
+            return results;
+        if(word.contains(",")) {
+            for (int k = 0; k < word.length(); k++) {
+                if (!(word.charAt(k) == ',')) {
+                    word = word + word.charAt(k);
+                }
+            }
+        }
+            double number = Double.parseDouble(word);
+        */
+        results[0]=0;
+        results[1]=0;
+    String word = words.get(index);
         if (!isNumber(word))
             return results;
     String nextWord = "";
@@ -22,13 +37,10 @@ public class NumberRepresentationRule extends ANumberRules{
         }
             number = Double.parseDouble(tempWord);
     }
-        else {
-            if(!word.contains(".")||(word.length() - word.replace(".", "").length()) / ".".length()>=2)
-                return results;
+       else {
                 number = Double.parseDouble(word);
-    }
-
-      //  if (index < l_singleWords.size() - 1)
+  }
+        if (index < words.size() - 1)
     nextWord = words.get(1);
 
     //check if the next word incrice our number
@@ -96,6 +108,7 @@ public class NumberRepresentationRule extends ANumberRules{
         results[0]=1;
         results[1]++;
         return results;
+
 }
     private double roundTheDigits(double toRound)
     {
