@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -18,11 +19,11 @@ public class CorpusDictenory {
     }
 
     private CorpusDictenory() {
-        Dictenory = new HashMap();
+        Dictenory = new LinkedHashMap<>();
     }
 
     public void addNumber(String word,String articleKey){
-
+/*
         if(Dictenory.containsKey(word)){
             LinkedList<String> tmp = Dictenory.get(word);
             tmp.add(articleKey);
@@ -35,8 +36,10 @@ public class CorpusDictenory {
             Dictenory.put(word,tmp);
             counter++;
         }
+        */
     }
     public void addWord(String word,String articleKey) {
+        /*
         String tempWord="";
         if(word.charAt(0)>='A'&&word.charAt(0)<='Z'){
             word=word.toUpperCase();
@@ -65,17 +68,18 @@ public class CorpusDictenory {
                     LinkedList<String> tmp = Dictenory.get(tempWord);
                     tmp.add(articleKey);
                     Dictenory.remove(tempWord);
-                    Dictenory.put(word, tmp);
+                   Dictenory.put(word, tmp);
                     counter++;
                 }
             }
             else {
                 LinkedList<String> tmp = new LinkedList<>();
                 tmp.add(articleKey);
-                Dictenory.put(word, tmp);
+               Dictenory.put(word, tmp);
                 counter++;
             }
         }
+        */
     }
 
     public  void printsize(){

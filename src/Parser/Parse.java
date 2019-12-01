@@ -45,7 +45,7 @@ public class Parse {
         char[] tempChar= new char[] { ' ', '\t', '\n' };
         txt=txt.replaceAll("\n","");
         txt=txt.replaceAll("\"",""); // Rule
-        String [] textArray = txt.split(" ");
+        String [] textArray = txt.split("( )|(\\t)");
         for(int i=0;i<textArray.length;i++){
             if(!textArray[i].equals(""))
             l_singleWords.add(textArray[i]);
@@ -58,7 +58,7 @@ public class Parse {
         index = 0;
         int [] results = new int[2];
         boolean ifFound ;
-        String [] rulesToCheack = {"DayMonthRule","MothYearRule",/*"PriceRepresentationRule",*/"PrecentageRepresentationRole","RangeRule","NumberRepresentationRule","SingleWordRule"};
+        String [] rulesToCheack = {"DayMonthRule","MothYearRule","SingleWordRule","PriceRepresentationRule","PrecentageRepresentationRole","RangeRule","NumberRepresentationRule"};
         deleteDelimitors();//The function removes all punctuation marks from all words in the repository before we start working with them.
         while (index < l_singleWords.size()) {
          if(checkStopWord())
@@ -94,11 +94,17 @@ public class Parse {
     {
         for (int i = 0; i < l_singleWords.size(); i++){
             String word= l_singleWords.remove(i);
+            if(word.equals("U.S.")){
+                l_singleWords.add(i,word);
+                continue;
+            }
             if(word.endsWith(",")||word.endsWith(".")||word.endsWith(")")||word.endsWith("(")||word.endsWith(";")||word.endsWith(":")||word.endsWith("]"))
             {
                 word = word.substring(0,word.length() - 1);
+                if(word.endsWith(",")||word.endsWith(".")||word.endsWith(")")||word.endsWith("(")||word.endsWith(";")||word.endsWith(":")||word.endsWith("]"))
+                    word = word.substring(0,word.length() - 1);
             }
-            if(word.startsWith("(")||word.startsWith(")"))
+            if(word.startsWith("(")||word.startsWith(")")||word.startsWith("["))
                 word = word.substring(1);
             int wordLength = word.length();
             if(word.startsWith("-")){
@@ -124,17 +130,6 @@ public class Parse {
     private boolean checkStopWord()
     {
         String checkWord = l_singleWords.get(index).toLowerCase(); // problem with May and may
-        /*
-        if(index+1<l_singleWords.size()) {
-            String nextWord = l_singleWords.get(index+1).toLowerCase();
-            if (hs_stopwords.contains(checkWord)&&hs_stopwords.contains(nextWord)) {
-                l_singleWords.remove(index+1);
-                l_singleWords.remove(index);
-                l_singleWords.add(index,checkWord+""+nextWord);
-                return true;
-            }
-        }
-        */
         if (hs_stopwords.contains(checkWord)) {
                 index = index + 1;
                 return true;

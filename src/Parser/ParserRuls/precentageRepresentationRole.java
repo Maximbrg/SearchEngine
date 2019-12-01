@@ -13,7 +13,7 @@ public class PrecentageRepresentationRole extends ANumberRules {
                 results[0] = 1;
                 results[1] = 1;
                 return results;
-            } else if (isNumber(str) && index < words.size() - 1 & (words.get(index+1).equals("percent") || words.get(index+1).equals("percentage")))  {
+            } else if (isNumber(str) && index < words.size()-1  && (words.get(index+1).equals("percent") || words.get(index+1).equals("percentage")))  {
                 addToDictionary(str + '%', key);
                 results[0] = 1;
                 results[1] = 2;

@@ -1,6 +1,9 @@
 import Parser.*;
 import ReadFile.ReadFile;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Main {
     public static  void main(String[]args)  {
@@ -12,9 +15,9 @@ public class Main {
  CorpusDictenory aaa = CorpusDictenory.getInstance();
  aaa.printsize();
 
-   //     Pattern p = Pattern.compile("[\\d]{4,6}");//. represents single character
-      //  Matcher m = p.matcher("999999");
-     //   System.out.println(m.matches());
+   //    Pattern p = Pattern.compile("[\\d]{4,6}[m]");//. represents single character
+   //   Matcher m = p.matcher("9999m");
+    //   System.out.println(m.matches());
 
     }
 }

@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class PriceRepresentationRule extends ANumberRules {
 
     public int[] roleChecker(ArrayList<String> words, String key,int index) {
-            results[0] = 1;
-            results[1] = 1;
+            results[0] = 0;
+            results[1] = 0;
+            int previndex=index;
         boolean hasComma = false;
         boolean flag=false;
         double price = 0;
@@ -25,34 +26,38 @@ public class PriceRepresentationRule extends ANumberRules {
             }
             word = tempWord;
         }
-
         String tempWord= words.get(index);
-        if (index < words.size() - 1 && (isNumber(words.get(index))||(tempWord.charAt(tempWord.length()-1))=='m')) {
+        //if (index < words.size() - 1 && (isNumber(words.get(index))||(tempWord.charAt(tempWord.length()-1))=='m')) {
+        if (index < words.size() - 1 && (isNumber(words.get(index)))) {
 
+            /*
             if((tempWord.charAt(tempWord.length()-1))=='m'){
                 price = Double.parseDouble(word.substring(0,tempWord.length()-1));
 
             }
             else
                 price = Double.parseDouble(word);
-
+*/
+            price = Double.parseDouble(word);
             if (index < words.size() - 1) {
-                if (words.get(index + 1) == "million" || words.get(index + 1) == "m" || words.get(index + 1) == "Million") {
+                if (words.get(index + 1).equals("million")  || words.get(index + 1).equals("m")|| words.get(index + 1).equals("Million")) {
                     bMultiplier = true;
-                } else if (words.get(index + 1) == "billion" || words.get(index + 1) == "bn" || words.get(index + 1) == "Billion") {
-                    price = price * 1000;
+
+                } else if (words.get(index + 1).equals("billion")  || words.get(index + 1).equals("bn")|| words.get(index + 1).equals("Billion")) {
+                        price = price * 1000;
                     bMultiplier = true;
                 }
-                if (bMultiplier && index < words.size() - 2 && words.get(index + 2) == "U.S.")
+                if (bMultiplier && index < words.size() - 2 && words.get(index + 2).equals("U.S.") ) {
                     index += 2;
+                }
                 if (index < words.size() - 1 && words.get(index + 1).contains("/")){
                     index += 1;
                     flag = true;
                 }
-
-
-                if (index < words.size() - 1 && words.get(index + 1) != "dollars" && words.get(index + 1) != "Dollars")
-                    return results;
+                if (index < words.size() - 2 && (words.get(index + 2).equals("Dollars"))==false &&(words.get(index + 2).equals("dollars"))==false) {
+                    if (index < words.size() - 1 && (words.get(index + 1).equals("Dollars")) == false && (words.get(index + 1).equals("dollars")) == false)
+                        return results;
+                }
                 index++;
             }
         } else if (words.get(index).charAt(0) == '$' && words.get(index).length() > 1 && isNumber(words.get(index).substring(1))) {
@@ -60,12 +65,12 @@ public class PriceRepresentationRule extends ANumberRules {
 
             if (index < words.size() - 1) {
 
-                if (words.get(index + 1) == "million" || words.get(index + 1) == "Million") {
+                if (words.get(index + 1).equals("million") || words.get(index + 1).equals("Million") ) {
                     bMultiplier = true;
-                } else if (words.get(index + 1) == "billion" || words.get(index + 1) == "Billion") {
+                } else if (words.get(index + 1).equals("billion")  ||words.get(index + 1).equals("Billion") ) {
                     price = price * 1000;
                     bMultiplier = true;
-                } else if (words.get(index + 1) == "trillion" || words.get(index + 1) == "Trillion") {
+                } else if (words.get(index + 1).equals("trillion")|| words.get(index + 1).equals("Trillion") ) {
                     price = price * 1000000;
                     bMultiplier = true;
                 }
@@ -94,6 +99,7 @@ public class PriceRepresentationRule extends ANumberRules {
 
             }
             else{
+
                 addToDictionary(String.valueOf(price) + " M Dollars",key);
             }
 
@@ -149,7 +155,7 @@ public class PriceRepresentationRule extends ANumberRules {
         }
         index++;
         results[0]=1;
-        results[1]=index;
+        results[1]=index-previndex;
         return results;
     }
     }

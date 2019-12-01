@@ -41,7 +41,7 @@ public class NumberRepresentationRule extends ANumberRules{
                 number = Double.parseDouble(word);
   }
         if (index < words.size() - 1)
-    nextWord = words.get(1);
+    nextWord = words.get(index+1);
 
     //check if the next word incrice our number
         if (nextWord.equals("thousand") || nextWord.equals("Thousand"))
