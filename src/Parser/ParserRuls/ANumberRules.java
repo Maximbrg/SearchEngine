@@ -22,6 +22,8 @@ public abstract class ANumberRules extends ARuleChecker {
     //This boolean func check if str is number
     protected boolean isNumber(String sNumber){
     int counter =0;
+    if(sNumber.length()==0)
+        return false;
         if ((sNumber.charAt(0) != '-' && (sNumber.charAt(0) < '0' || sNumber.charAt(0) > '9')))
             return false;
         for (int i = 1; i < sNumber.length(); i++)

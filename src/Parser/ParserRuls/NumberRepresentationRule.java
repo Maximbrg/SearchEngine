@@ -4,44 +4,25 @@ import java.util.ArrayList;
 
 public class NumberRepresentationRule extends ANumberRules{
 
-    public int[] roleChecker(ArrayList<String> words, String key,int index){
-        /*
+    public int[] roleChecker(String[] words, String key,int index){
+
         results[0]=0;
         results[1]=0;
-        String word = words.get(0);
-        if (!isNumber(word))
-            return results;
-        if(word.contains(",")) {
-            for (int k = 0; k < word.length(); k++) {
-                if (!(word.charAt(k) == ',')) {
-                    word = word + word.charAt(k);
-                }
-            }
-        }
-            double number = Double.parseDouble(word);
-        */
-        results[0]=0;
-        results[1]=0;
-    String word = words.get(index);
+    String word = getWord(words,index);
         if (!isNumber(word))
             return results;
     String nextWord = "";
     double number = 0.0;
     String tempWord="";
         if(word.contains(",")){
-        for (int k = 0;  k<word.length() ; k++){
-            if(!(word.charAt(k)==',')){
-                tempWord= tempWord +word.charAt(k);
-            }
-
-        }
+            tempWord=  word.replaceAll(",","");
             number = Double.parseDouble(tempWord);
     }
        else {
                 number = Double.parseDouble(word);
   }
-        if (index < words.size() - 1)
-    nextWord = words.get(index+1);
+        if (index < words.length- 1)
+    nextWord = getWord(words,index+1);
 
     //check if the next word incrice our number
         if (nextWord.equals("thousand") || nextWord.equals("Thousand"))
@@ -73,7 +54,17 @@ public class NumberRepresentationRule extends ANumberRules{
     {
         number = roundTheDigits(number);
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number),key);
+
+        String strPrice=String.valueOf(number);
+        if(strPrice.contains(".0")) {
+            number = Double.parseDouble(strPrice);
+            int newNumber = (int) number;
+            addToDictionary(String.valueOf(newNumber),key);
+        }
+        else{
+            addToDictionary(String.valueOf(number),key);
+        }
+
         results[0]=1;
         results[1]++;
         return results;
@@ -82,7 +73,18 @@ public class NumberRepresentationRule extends ANumberRules{
     {
         number = number / 1000;
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number) + 'K',key);
+
+        String strPrice=String.valueOf(number);
+        if(strPrice.contains(".0")) {
+            number = Double.parseDouble(strPrice);
+            int newNumber = (int) number;
+            addToDictionary(String.valueOf(newNumber) + 'K',key);
+        }
+        else{
+            addToDictionary(String.valueOf(number)+ 'K',key);
+        }
+
+
         results[0]=1;
         results[1]++;
         return results;
@@ -91,7 +93,18 @@ public class NumberRepresentationRule extends ANumberRules{
     {
         number = number / 1000000;
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number) + 'M',key);
+
+        String strPrice=String.valueOf(number);
+        if(strPrice.contains(".0")) {
+            number = Double.parseDouble(strPrice);
+            int newNumber = (int) number;
+            addToDictionary(String.valueOf(newNumber) + 'M',key);
+        }
+        else{
+            addToDictionary(String.valueOf(number)+ 'M',key);
+        }
+
+
         results[0]=1;
         results[1]++;
         return results;
@@ -100,7 +113,17 @@ public class NumberRepresentationRule extends ANumberRules{
     {
         number = number / 1000000000;
         number = roundTheDigits(number);
-        addToDictionary(String.valueOf(number) + 'B',key);
+
+        String strPrice=String.valueOf(number);
+        if(strPrice.contains(".0")) {
+            number = Double.parseDouble(strPrice);
+            int newNumber = (int) number;
+            addToDictionary(String.valueOf(newNumber) + 'B',key);
+        }
+        else{
+            addToDictionary(String.valueOf(number)+ 'B',key);
+        }
+
         results[0]=1;
         results[1]++;
         return results;

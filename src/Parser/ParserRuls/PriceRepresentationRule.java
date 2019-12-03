@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PriceRepresentationRule extends ANumberRules {
 
-    public int[] roleChecker(ArrayList<String> words, String key,int index) {
+    public int[] roleChecker(String[] words, String key,int index) {
             results[0] = 0;
             results[1] = 0;
             int previndex=index;
@@ -12,23 +12,20 @@ public class PriceRepresentationRule extends ANumberRules {
         boolean flag=false;
         double price = 0;
         boolean bMultiplier = false;
-        String word = words.get(index);
-
-
+        String word = getWord(words,index);
+        if(word.equals(""))
+            return results;
         if (word.contains(",")) {
             hasComma = true;
             String tempWord = "";
-            for (int k = 0; k < word.length(); k++) {
-                if (!(word.charAt(k) == ',')) {
-                    tempWord = tempWord + word.charAt(k);
-                }
-
-            }
+            tempWord = word.replaceAll(",","");
             word = tempWord;
         }
-        String tempWord= words.get(index);
-        //if (index < words.size() - 1 && (isNumber(words.get(index))||(tempWord.charAt(tempWord.length()-1))=='m')) {
-        if (index < words.size() - 1 && (isNumber(words.get(index)))) {
+        String tempWord= getWord(words,index);
+        if(tempWord.equals(""))
+            return results;
+            //if (index < words.size() - 1 && (isNumber(words.get(index))||(tempWord.charAt(tempWord.length()-1))=='m')) {
+            if (index < words.length - 1 && (isNumber(getWord(words, index)))) {
 
             /*
             if((tempWord.charAt(tempWord.length()-1))=='m'){
@@ -38,45 +35,48 @@ public class PriceRepresentationRule extends ANumberRules {
             else
                 price = Double.parseDouble(word);
 */
-            price = Double.parseDouble(word);
-            if (index < words.size() - 1) {
-                if (words.get(index + 1).equals("million")  || words.get(index + 1).equals("m")|| words.get(index + 1).equals("Million")) {
-                    bMultiplier = true;
+                price = Double.parseDouble(word);
 
-                } else if (words.get(index + 1).equals("billion")  || words.get(index + 1).equals("bn")|| words.get(index + 1).equals("Billion")) {
+                if (index < words.length - 1) {
+                    if (getWord(words, index + 1).equals("million") || getWord(words, index + 1).equals("m") || getWord(words, index + 1).equals("Million")) {
+                        bMultiplier = true;
+
+                    } else if (getWord(words, index + 1).equals("billion") || getWord(words, index + 1).equals("bn") || getWord(words, index + 1).equals("Billion")) {
                         price = price * 1000;
-                    bMultiplier = true;
+                        bMultiplier = true;
+                    }
+                    if (bMultiplier && index < words.length - 2 && getWord(words, index + 2).equals("U.S.")) {
+                        index += 2;
+                    }
+                    if (index < words.length - 1 && getWord(words, index + 1).contains("/")) {
+                        index += 1;
+                        flag = true;
+                    }
+                    if (word.length() > 2 && index < words.length - 2 && (getWord(words, index + 2).equals("Dollars")) == false && (getWord(words, index + 2).equals("dollars")) == false) {
+                        if (index < words.length - 1 && (getWord(words, index + 1).equals("Dollars")) == false && (getWord(words, index + 1).equals("dollars")) == false)
+                            return results;
+                    }
+                    index++;
                 }
-                if (bMultiplier && index < words.size() - 2 && words.get(index + 2).equals("U.S.") ) {
-                    index += 2;
-                }
-                if (index < words.size() - 1 && words.get(index + 1).contains("/")){
-                    index += 1;
-                    flag = true;
-                }
-                if (index < words.size() - 2 && (words.get(index + 2).equals("Dollars"))==false &&(words.get(index + 2).equals("dollars"))==false) {
-                    if (index < words.size() - 1 && (words.get(index + 1).equals("Dollars")) == false && (words.get(index + 1).equals("dollars")) == false)
-                        return results;
-                }
-                index++;
-            }
-        } else if (words.get(index).charAt(0) == '$' && words.get(index).length() > 1 && isNumber(words.get(index).substring(1))) {
-            price = Double.parseDouble(word.substring(1));
+            } else if (!getWord(words, index).equals("") && getWord(words, index).charAt(0) == '$' && getWord(words, index).length() > 1 && isNumber(getWord(words, index).substring(1))) {
+                price = Double.parseDouble(word.substring(1));
 
-            if (index < words.size() - 1) {
+                if (index < words.length - 1) {
 
-                if (words.get(index + 1).equals("million") || words.get(index + 1).equals("Million") ) {
-                    bMultiplier = true;
-                } else if (words.get(index + 1).equals("billion")  ||words.get(index + 1).equals("Billion") ) {
-                    price = price * 1000;
-                    bMultiplier = true;
-                } else if (words.get(index + 1).equals("trillion")|| words.get(index + 1).equals("Trillion") ) {
-                    price = price * 1000000;
-                    bMultiplier = true;
+                    if (getWord(words, index + 1).equals("million") || getWord(words, index + 1).equals("Million")) {
+                        bMultiplier = true;
+                    } else if (getWord(words, index + 1).equals("billion") || getWord(words, index + 1).equals("Billion")) {
+                        price = price * 1000;
+                        bMultiplier = true;
+                    } else if (getWord(words, index + 1).equals("trillion") || getWord(words, index + 1).equals("Trillion")) {
+                        price = price * 1000000;
+                        bMultiplier = true;
+                    }
                 }
-            }
-        } else
-            return results;
+            } else
+                return results;
+
+
         if (bMultiplier)
             index++;
         if (!bMultiplier && price >= 1000000) {
@@ -141,7 +141,7 @@ public class PriceRepresentationRule extends ANumberRules {
                         strPrice=String.valueOf(newPrice);
 
                     }
-                    String fraction= words.get(index-1);
+                    String fraction= getWord(words,index-1);
                     str.append((strPrice+" " ));
                     str.append((fraction +" Dollars"));
                 }

@@ -8,18 +8,24 @@ import static jdk.nashorn.internal.runtime.JSType.isNumber;
 public class DayMonthRule extends ADatesRule {
 
 
-    public int[] roleChecker(ArrayList<String> words,String key,int index) {
+    public int[] roleChecker(String[] words,String key,int index) {
         //To qualify as a month-day format there needs to be atleast 2 strings.
         results[0] = 0;
         results[1] = 0;
-        if (words.get(index).contains("%") || words.get(0).contains(".") || words.get(index).contains(",")) {
+        if(words[index].length()==0)
+            return results;
+        if (getWord(words,index).endsWith("%")/*|| getWord(words,index).endsWith(".") || getWord(words,index).endsWith(",")*/) {
             return results;
         }
         //We will look at the two next words in their lowercase form.
-        if (words.size() < index + 2)
+        if (words.length < index + 2)
             return results;
-        String day = words.get(index).toLowerCase();
-        String month = words.get(index + 1).toLowerCase();
+        String day =getWord(words,index).toLowerCase();
+        String month = getWord(words,index+1).toLowerCase();
+        if(!isNumber(day)&&!isNumber((month)))
+            return results;
+        if(day.equals("")||month.equals(""))
+            return results;
         //   if(!isNumber(day)&&!isNumber(day))
         //   return results;
         //check if the first is the day
@@ -30,7 +36,6 @@ public class DayMonthRule extends ADatesRule {
 
         }
         //check if the second word can be the day.
-        try {
             int intDay = Integer.parseInt(day);
             int intMonth = -1;
             if (intDay > 0 && intDay <= 31 && d_months.contains(month)) {
@@ -52,9 +57,6 @@ public class DayMonthRule extends ADatesRule {
                 results[1] = 2;
                 return results;
             }
-        } catch (Exception e) {
-            return results;
-        }
 
         return results;
     }

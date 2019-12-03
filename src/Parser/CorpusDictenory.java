@@ -23,7 +23,7 @@ public class CorpusDictenory {
     }
 
     public void addNumber(String word,String articleKey){
-/*
+
         if(Dictenory.containsKey(word)){
             LinkedList<String> tmp = Dictenory.get(word);
             tmp.add(articleKey);
@@ -36,11 +36,13 @@ public class CorpusDictenory {
             Dictenory.put(word,tmp);
             counter++;
         }
-        */
+
     }
     public void addWord(String word,String articleKey) {
-        /*
+
         String tempWord="";
+        if(word.length()<1)
+            return;
         if(word.charAt(0)>='A'&&word.charAt(0)<='Z'){
             word=word.toUpperCase();
            tempWord = word.toLowerCase();
@@ -79,7 +81,8 @@ public class CorpusDictenory {
                 counter++;
             }
         }
-        */
+
+
     }
 
     public  void printsize(){

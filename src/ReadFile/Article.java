@@ -2,7 +2,9 @@ package ReadFile;
 
 import jdk.nashorn.internal.runtime.ECMAException;
 
-public class Article {
+import java.util.ArrayList;
+
+public class Article  {
     private  static int i=0;
     String DANCO;
     String info;

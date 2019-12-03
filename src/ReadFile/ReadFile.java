@@ -47,9 +47,11 @@ public class ReadFile {
                         }
                         in.close();
                     } catch (IOException e) {
+                        System.out.println(e);
                     }
                 }
             }
+
         }
     }
 }
