@@ -27,20 +27,14 @@ public class RangeRule extends ANumberRules {
                 }
             }
         }
-/*
-        else if (word.indexOf('-') > 0)
+
+        else if ((word.matches("^[a-zA-Z]*[\\-]{1}[a-zA-Z]+\\-[a-zA-Z]+$"))||((word.matches("^[a-zA-Z]+\\-{1}[a-zA-Z]+$"))))
         {
-
-            result=result+word;
-            while(word.indexOf('-') > 0){
-                index++;
-                word=l_singleWords.get(index);
-                result=result+word;
-            }
-            index++;
-
+            results[0] = 1;
+            results[1] = 1;
+            result=getWord(words,index);
         }
-        */
+
         if (results[1] == 0)
             return results;
         addToDictionary(result,key);

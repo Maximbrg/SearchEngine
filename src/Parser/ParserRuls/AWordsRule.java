@@ -15,4 +15,6 @@ public abstract class AWordsRule extends ARuleChecker {
         }
     }
 
+
+
 }

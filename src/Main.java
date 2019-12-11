@@ -1,6 +1,9 @@
 import Parser.*;
 import ReadFile.ReadFile;
 
+import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +20,17 @@ public class Main {
         System.out.println("time"+"----"+(b-a)*0.000000001);
  CorpusDictenory aaa = CorpusDictenory.getInstance();
  aaa.printsize();
+        TreeMap<String, LinkedList<String> > aabb = aaa.getDictenory();
+ try {
+     PrintWriter writer = new PrintWriter("AAAAAAA.txt", "UTF-8");
+     for(String strt : aaa.Dictenory.keySet()){
+         writer.println(strt);
+     }
+     writer.close();
+ }
+ catch (Exception e){
+     System.out.println("sss");
+ }
 
    //    Pattern p = Pattern.compile("[\\d]{4,6}[m]");//. represents single character
    //   Matcher m = p.matcher("9999m");

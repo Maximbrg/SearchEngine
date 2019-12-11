@@ -19,6 +19,12 @@ public class RulesFactory {
             return new SingleWordRule();
         else if(RuleName.equals("PriceRepresentationRule"))
             return new PriceRepresentationRule();
+        else if(RuleName.equals("PhoneNumberRepresentationRule"))
+            return new PhoneNumberRepresentationRule();
+        else if(RuleName.equals("KiloOrMeterRepresentationRule"))
+            return new KiloOrMeterRepresentationRule();
+        else if(RuleName.equals("ExpressionsRepresentationRule"))
+            return new ExpressionsRepresentationRule();
         return null;
     }
 }

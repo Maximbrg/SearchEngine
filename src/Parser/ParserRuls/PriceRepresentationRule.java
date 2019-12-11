@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class PriceRepresentationRule extends ANumberRules {
 
     public int[] roleChecker(String[] words, String key,int index) {
-            results[0] = 0;
-            results[1] = 0;
-            int previndex=index;
+        results[0] = 0;
+        results[1] = 0;
+        int previndex=index;
         boolean hasComma = false;
         boolean flag=false;
         double price = 0;
@@ -146,8 +146,21 @@ public class PriceRepresentationRule extends ANumberRules {
                     str.append((fraction +" Dollars"));
                 }
                 else{
-                    str.append((String.valueOf(price) + " Dollars"));
+                    if(getWord(words,previndex).charAt(0)=='$'){
+                        String strPrice=String.valueOf(price);
+                        if(strPrice.contains(".0")){
+                            price = Double.parseDouble(strPrice);
+                            int newPrice=(int)price;
+                            strPrice=String.valueOf(newPrice);
+                            str.append((strPrice + " Dollars"));
+                        }
+                        else
+                            str.append((strPrice + " Dollars"));
+                    }
+                    else
+                        return results;
                 }
+
 
 
             }
